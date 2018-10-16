@@ -9,23 +9,39 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
     'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
+  web:
+    'Refresh or edit the source file to reload.'
 });
 
 interface Props {}
-export default class App extends Component<Props> {
+interface State {
+  counter: number;
+}
+export default class App extends Component<Props, State> {
+  state = {
+    counter: 0,
+  };
+
+  onPress = () => {
+    const { counter } = this.state;
+    this.setState({counter: counter + 1});
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Text style={styles.instructions}>To get started, edit App.tsx</Text>
         <Text style={styles.instructions}>{instructions}</Text>
+        <Button title="Click me!" onPress={this.onPress}/>
+        <Text>{this.state.counter}</Text>
       </View>
     );
   }
